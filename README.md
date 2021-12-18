@@ -1,3 +1,7 @@
+## [Live Project](https://hotstar-clone-64552.web.app/)
+
+Thanks to [Clever Programmer](https://www.youtube.com/c/CleverProgrammer/featured) for the project video, will recommend to react beginners trying to make projects.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
