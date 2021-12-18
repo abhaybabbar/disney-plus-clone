@@ -1,40 +1,103 @@
 // styled components --> CSS within JS
 // have to install it
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { auth, provider } from "../firebase";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectUserName,
+  selectUserPhoto,
+  setUserLogin,
+  setSignOut,
+} from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        navigate("/");
+      } else {
+        dispatch(setSignOut());
+        navigate("/login");
+      }
+    });
+  }, []);
+
+  const signIn = () => {
+    auth.signInWithPopup(provider).then((result) => {
+      let user = result.user;
+      dispatch(
+        setUserLogin({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        })
+      );
+      navigate("/");
+    });
+  };
+
+  const signOut = () => {
+    auth.signOut();
+    dispatch(setSignOut());
+    navigate("/login");
+  };
+
+  console.log(userName);
+
   return (
     <Nav>
-      <Logo src="/images/logo.svg" />
-      <NavMenu>
-        <a>
-          <img src="/images/home-icon.svg" />
-          <span>Home</span>
-        </a>
-        <a>
-          <img src="/images/search-icon.svg" />
-          <span>Search</span>
-        </a>
-        <a>
-          <img src="/images/watchlist-icon.svg" />
-          <span>Watchlist</span>
-        </a>
-        <a>
-          <img src="/images/original-icon.svg" />
-          <span>originals</span>
-        </a>
-        <a>
-          <img src="/images/movie-icon.svg" />
-          <span>movies</span>
-        </a>
-        <a>
-          <img src="/images/series-icon.svg" />
-          <span>series</span>
-        </a>
-      </NavMenu>
+      <Link to="/">
+        <Logo src="/images/logo.svg" />
+      </Link>
+      {userName ? (
+        <>
+          <NavMenu>
+            <Link to="/">
+              <img src="/images/home-icon.svg" />
+              <span>Home</span>
+            </Link>
+            <Link to="/">
+              <img src="/images/search-icon.svg" />
+              <span>Search</span>
+            </Link>
+            <Link to="/">
+              <img src="/images/watchlist-icon.svg" />
+              <span>Watchlist</span>
+            </Link>
+            <Link to="/">
+              <img src="/images/original-icon.svg" />
+              <span>originals</span>
+            </Link>
+            <Link to="/">
+              <img src="/images/movie-icon.svg" />
+              <span>movies</span>
+            </Link>
+            <Link to="/">
+              <img src="/images/series-icon.svg" />
+              <span>series</span>
+            </Link>
+          </NavMenu>
 
-      <UserImg src="https://i.ytimg.com/vi/vijnEOVzOkE/hqdefault_live.jpg" />
+          <UserImg onClick={signOut} src={userPhoto} />
+        </>
+      ) : (
+        <Login onClick={signIn}>Login</Login>
+      )}
     </Nav>
   );
 }
@@ -52,6 +115,7 @@ const Nav = styled.nav`
 
 const Logo = styled.img`
   width: 80px;
+  cursor: pointer;
 `;
 
 const NavMenu = styled.div`
@@ -65,6 +129,8 @@ const NavMenu = styled.div`
     align-items: center;
     padding: 0 12px;
     cursor: pointer;
+    text-decoration: none;
+    color: white;
 
     img {
       height: 20px;
@@ -106,4 +172,22 @@ const UserImg = styled.img`
   border-radius: 50%;
   cursor: pointer;
   object-fit: cover;
+`;
+
+const Login = styled.div`
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 8px 16px;
+  letter-spacing: 1.5px;
+  margin-left: auto;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 250ms ease;
+
+  &:hover {
+    background: #f9f9f9;
+    color: black;
+    border-color: transparent;
+  }
 `;
