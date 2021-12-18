@@ -63,7 +63,7 @@ export default Detail;
 
 const Container = styled.div`
   min-height: calc(100vh - 70px);
-  padding: 30px calc(3.5vw + 5px);
+  padding: 50px calc(3.5vw + 5px);
   postion: relative;
 `;
 
@@ -74,7 +74,7 @@ const Background = styled.div`
   right: 0;
   bottom: 0;
   z-index: -1;
-  opacity: 0.6;
+  opacity: 0.5;
 
   img {
     width: 100%;
@@ -98,7 +98,7 @@ const ImageTitle = styled.div`
 const Controls = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 30px;
 `;
 
 const PlayButton = styled.button`
@@ -170,6 +170,6 @@ const Description = styled.div`
   line-height: 1.4;
   font-size: 20px;
   margin-top: 16px;
-  color: rgb(249, 249, 249);
-  max-width: 600px;
+  color: white;
+  max-width: 700px;
 `;
