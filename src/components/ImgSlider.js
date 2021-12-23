@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import cssProperties from "../healper/cssProperties";
 
 function ImgSlider() {
   let settings = {
@@ -71,5 +72,10 @@ const Wrap = styled.div`
     &:hover {
         border: 4px solid rgba(249, 249, 249, 0.8);
     }
+    @media (max-width: ${cssProperties.breakPoint3}) {
+    height: 150px;
+    object-fit: cover;
+
+  }
   }
 `;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { selectMovies } from "../features/movie/movieSlice";
 import { useSelector } from "react-redux";
+import cssProperties from "../healper/cssProperties";
 
 function Movies() {
   const movies = useSelector(selectMovies);
@@ -35,6 +36,17 @@ const Content = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 25px;
+  @media (max-width: ${cssProperties.breakPoint1}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: ${cssProperties.breakPoint2}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: ${cssProperties.breakPoint3}) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    width: 80%;
+    margin: 0 auto;
+  }
 `;
 
 const Wrap = styled.div`

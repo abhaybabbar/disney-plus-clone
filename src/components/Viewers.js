@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import HoverVideoPlayer from "react-hover-video-player";
+import cssProperties from "../healper/cssProperties";
 
 const tiles = [
   {
@@ -79,6 +80,18 @@ const Container = styled.div`
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 25px;
   padding: 30px 0 26px;
+
+  @media (max-width: ${cssProperties.breakPoint1}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: ${cssProperties.breakPoint2}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: ${cssProperties.breakPoint3}) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    width: 80%;
+    margin: 0 auto;
+  }
 `;
 
 const Wrap = styled.div`

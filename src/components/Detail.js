@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, Navigate } from "react-router-dom";
 import db from "../firebase";
+import cssProperties from "../healper/cssProperties";
 
 function Detail() {
   const { id } = useParams();
@@ -38,20 +39,24 @@ function Detail() {
         <img src={movie.logo} />
       </ImageTitle>
       <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" />
-          <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img src="/images/group-icon.png" />
-        </GroupWatchButton>
+        <MainButton>
+          <PlayButton>
+            <img src="/images/play-icon-black.png" />
+            <span>Play</span>
+          </PlayButton>
+          <TrailerButton>
+            <img src="/images/play-icon-white.png" />
+            <span>Trailer</span>
+          </TrailerButton>
+        </MainButton>
+        <SideButton>
+          <AddButton>
+            <span>+</span>
+          </AddButton>
+          <GroupWatchButton>
+            <img src="/images/group-icon.png" />
+          </GroupWatchButton>
+        </SideButton>
       </Controls>
       <SubTitle>{movie.subtitle}</SubTitle>
       <Description>{movie.description}</Description>
@@ -99,6 +104,11 @@ const Controls = styled.div`
   display: flex;
   align-items: center;
   margin-top: 30px;
+  @media (max-width: ${cssProperties.breakPoint2}) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+  }
 `;
 
 const PlayButton = styled.button`
@@ -152,6 +162,13 @@ const AddButton = styled.button`
   }
 `;
 
+const MainButton = styled.div`
+  display: flex;
+`;
+const SideButton = styled.div`
+  display: flex;
+`;
+
 const GroupWatchButton = styled(AddButton)`
   background-color: rgba(0, 0, 0, 1);
   &:hover {
@@ -172,4 +189,11 @@ const Description = styled.div`
   margin-top: 16px;
   color: white;
   max-width: 700px;
+  @media (max-width: ${cssProperties.breakPoint2}) {
+    max-width: 400px;
+    font-size: 18px;
+  }
+  @media (max-width: ${cssProperties.breakPoint2}) {
+    font-size: 18px;
+  }
 `;
